@@ -100,7 +100,7 @@ Setelah melakukan semua langkah-langkah diatas, saya bisa melakukan `git add, co
 
 # Penjelasan bagan request client web dan kaitannya dengan urls.py, models.py, views.py, dan html.
 
-![django_77d5263d13](https://github.com/user-attachments/assets/840247fb-c9ab-402d-95b2-401bf3963ac6)
+![Untitled](https://github.com/user-attachments/assets/059acabe-ba40-407b-b92e-9ecea30a98c8)
 
 1. Client Request:
 <br>Pengguna (client) mengakses URL tertentu melalui browser atau aplikasi.
