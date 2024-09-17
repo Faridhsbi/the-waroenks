@@ -15,9 +15,6 @@
     <br>
     <strong> Name : </strong> {{ name }}<br>
     <strong> Class : </strong> {{ class }} <br>
-    <!-- <strong>Harga:</strong> {{ price }}<br>
-    <strong>Stok:</strong> {{ stock }}<br>
-    <strong>Deskripsi:</strong> {{ description }}<br>  -->
     <br><br/>
     <a href="{% url 'main:create_product' %}">
       <button id="submit">Add New Product</button>
@@ -27,21 +24,21 @@
     <p>Belum ada data product pada The Waroenks.</p>
     {% else %}
     {% for product in products %}
-    <div class="box">
-      <div id="inbox1">
-        <h2 style="text-align: center; line-height: 5px;">{{product.name}}</h2>
-        <p style="text-align: center;">{{product.description}}</p>
-        <br>
+      <div class="box">
+        <div id="inbox1">
+          <h2 style="line-height: 5px;">{{product.name}}</h2>
+          <p >{{product.description}}</p>
+        </div>
+        <div id="inbox2">
+          <hr>  
+          <pre>Harga  : Rp. {{product.price}}</pre>
+          <pre>Stock  : {{product.stock}}</pre>
+          <pre>Rate   : {{product.rating}} / 5.0</pre>
+        </div>
       </div>
-      <hr>  
-      <div id="inbox2">
-        
-        <pre>Harga  : Rp. {{product.price}}</pre>
-        <pre>Stock  : {{product.stock}}</pre>
-        <pre>Rate   : {{product.rating}} / 5.0</pre>
-      </div>
-    </div>
+
     {% endfor %}
+
     <!-- <table border="2">
       <tr align="center" style="background-color: aquamarine;">
         <th width="200">Product Name</th>

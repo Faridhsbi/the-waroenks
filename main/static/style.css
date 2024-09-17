@@ -8,6 +8,7 @@ h1{
 }
 
 body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: rgb(241, 241, 241);
     margin-left: 30px;
     margin-top: 0;
@@ -22,16 +23,23 @@ body{
     font-size: medium;
     align-items: center;
     border-radius: 10px; 
-    background-color: rgb(255, 217, 134);
+    background-color: #FFA630;
 }
 #submit:hover {
-    background-color: rgb(251, 193, 69);
+    background-color: #ffd49c;
 }
 #nama_produk {
     margin-left: 10px;
 }
-
+.outerbox {
+    justify-content: space-evenly;   
+    flex-wrap:wrap;
+    align-content: space-evenly;
+    column-gap: 10em;
+    row-gap: 5em;
+}
 .box {
+
     margin: auto;
     display: inline-table;
     justify-content: space-evenly;   
@@ -39,21 +47,30 @@ body{
     flex-wrap:wrap;
     column-gap: 10em;
     row-gap: 5em;
-    float:none;
-    /* align-items: center;  */
+
     width: 350px;
     height: 350px;
     
-    background-color: rgb(213, 255, 241);
+    background-color: #D7E8BA;
     font-size: larger;
     border: 2px solid;
     border-radius: 20px;
-    padding : 20px;
+    padding : 2em;
+    margin-top: 20px;
+
+    position: relative;
 
 }
-
+#inbox1 {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+}
 #inbox2{
-
     text-align: left;
-    padding-inline: 55px;
+    font-size: 17px;
+    /* padding-inline: 55px; */
+    margin-left: 3em;
+    position: absolute;
+    bottom: 2em;
+    left: 2em;
 }
