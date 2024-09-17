@@ -33,26 +33,27 @@ body{
 
 .box {
     margin: auto;
-    /* display:flexbox; */
+    display: inline-table;
     justify-content: space-evenly;   
     /* buat ngasih gap antar box */
     flex-wrap:wrap;
     column-gap: 10em;
-    row-gap: 2em;
+    row-gap: 5em;
+    float:none;
     /* align-items: center;  */
-    /* width: 350px;
-    height: 280px; */
+    width: 350px;
+    height: 350px;
     
     background-color: rgb(213, 255, 241);
     font-size: larger;
     border: 2px solid;
     border-radius: 20px;
     padding : 20px;
-    max-width: 23%;
-    max-height: 28%;
+
 }
 
 #inbox2{
+
     text-align: left;
     padding-inline: 55px;
 }
