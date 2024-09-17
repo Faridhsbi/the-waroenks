@@ -1,19 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% block content %}
+
 <head>
-    <meta charset="UTF-8">
     <title>{{ app_name }}</title>
+    {% load static %}  
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <h1>{{ app_name }}</h1>
-    <p>At {{ app_name }}, we offer a unique collection of high-quality products from fashion and accessories to home essentials. Whatever you’re searching for, we’re committed to providing an enjoyable and satisfying shopping experience.</p>
+  <header>
+    <h1 style="font-size: 50px;"><span style="color: blue;">The</span><span style="color: tomato;">Waroenks</span></h1>
+  </header>
+    <!-- <p><tt>At {{ app_name }}, we offer a unique collection of high-quality products from fashion and accessories to home essentials.<br> 
+      Whatever you’re searching for, we’re committed to providing an enjoyable and satisfying shopping experience.</tt></p> -->
     <br>
-    <strong>Nama :</strong> {{ name }}<br><br>
+    <strong> Name : </strong> {{ name }}<br>
     <strong> Class : </strong> {{ class }} <br>
     <!-- <strong>Harga:</strong> {{ price }}<br>
     <strong>Stok:</strong> {{ stock }}<br>
     <strong>Deskripsi:</strong> {{ description }}<br>  -->
+    <br><br/>
+    <a href="{% url 'main:create_product' %}">
+      <button id="submit">Add New Product</button>
+    </a>
+    <br> <br/>
+    {% if not products %}
+    <p>Belum ada data product pada The Waroenks.</p>
+    {% else %}
+    {% for product in products %}
+    <div class="box">
+      <div id="inbox1">
+        <h2 style="text-align: center; line-height: 5px;">{{product.name}}</h2>
+        <p style="text-align: center;">{{product.description}}</p>
+        <br><hr>
+      </div>
+      <div id="inbox2">
+        <pre>Harga  : Rp. {{product.price}}</pre>
+        <pre>Stock  : {{product.stock}}</pre>
+        <pre>Rate   : {{product.rating}} / 5.0</pre>
+      </div>
+    </div>
+    {% endfor %}
+    <!-- <table border="2">
+      <tr align="center" style="background-color: aquamarine;">
+        <th width="200">Product Name</th>
+        <th width="250">Description</th>
+        <th width="100">Price</th>
+        <th width="100">Stock</th>
+        <th width="100">Rating (5.0)</th>
+      </tr>
+    <br><br>
+      {% for product in products %}
+      <tr style="background-color: aliceblue;">
+        <td>{{product.name}}</td>
+        <td>{{product.description}}</td>
+        <td align="center">{{product.price}}</td>
+        <td align="center">{{product.stock}}</td>
+        <td align="center">{{product.rating}}</td>
+      </tr>
+      {% endfor %}
+    </table> -->
+    {% endif %}
+    
+    <br />
+  
 </body>
-</html>
+
+
+{% endblock content %}
 
     

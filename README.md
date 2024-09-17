@@ -2,7 +2,10 @@
 
 Link PWS : [The Waroenk](http://muhammad-farid31-thewaroenks.pbp.cs.ui.ac.id/)
 
-# Membuat Project Django baru
+<hr>
+
+# TUGAS 2
+## Membuat Project Django baru
 
 Pertama-tama saya membuat virutal environment dengan menggunakan perintah 
 ```
@@ -150,4 +153,176 @@ Setelah melakukan semua langkah-langkah diatas, saya bisa melakukan `git add, co
 
 ORM adalah suatu teknik yang memungkinkan kita memanipulasi data dalam database relasional menggunakan Object-oriented Programming (OOP) yang juga memungkinkan pengguna dapat berinteraksi dengan database melalui pyhton tanpa harus menggunakan query SQL. Kemudian, Mapping dalam Django secara otomatis dapat langsung memetakan atribut model ke tabel dalam database. Dengan demikian, alasan mengapa model pada Django disebut sebagai ORM
 
+
+<hr>
+
+# TUGAS 3
+
+## 1. Alasan Mengapa Kita Membutuhkan _Data Delivery_
+Data delivery merupakan proses untuk memastikan bahwa data yang telah dihasilkan didalam suatu platform dapat disimpan dengan aman, efisien, dan juga akurat. Adapun alasan mengapa kita membutuhkan _Data Delivery_ antara lain:
+- Pengambilan Keputusan yang Cepat dan Tepat: 
+<br>Data delivery memungkinkan informasi yang relevan untuk dihantarkan ke pengguna atau sistem dengan cepat.
+- Real-Time Analytics<br>
+Data delivery memastikan bahwa data yang paling terbaru selalu tersedia, memungkinkan analisis yang lebih akurat dan responsif terhadap perubahan kondisi.
+- Keterhubungan dan Integrasi<br>
+Data delivery memastikan bahwa data dapat bergerak dengan mulus antara berbagai komponen sistem, memungkinkan integrasi yang efisien.
+- Responsivitas Aplikasi Web<br>
+Data delivery memungkinkan perubahan data (misalnya, hasil pencarian, pembaruan status, atau perubahan konfigurasi) untuk diterapkan tanpa harus memuat ulang seluruh halaman. Contoh teknologi yang memanfaatkan ini adalah AJAX (Asynchronous JavaScript and XML).
+
+## 2.  XML dan JSON, dan  Mengapa JSON lebih populer dibandingkan XML?
+
+Antara XML dan JSON keduanya memiliki kelebihan dan kekurangannya masing-masing. Kelebihan XML yaitu memiliki struktur data hierarkis dan juga memiliki fleksibilitas terhadap struktur data yang kompleks. Akan tetapi, XML juga memiliki kekurangan yaitu sintaksnya yang terlalu bertele-tele, susah dibaca, dan ukuran file yang besar. Di JSON sendiri memiliki struktur sederhana seperti "dictionary" yang merepresentasikan _key and value_ sehingga lebih mudah dibaca. Selain itu, JSON juga lebih ringan dan efisien terutama dalam pertukaran data dalam aplikasi web dan API.
+<br>
+JSON lebih populer karena :
+- Ringan dan Efisien<br>
+  JSON memiliki ukuran file yang lebih ringan dibanding XML, hal ini juga dapat memengaruhi kinerja dalam memproses data secara real-time.
+- Struktur Data yang simple<br>
+  JSON juga memiliki struktur data yang simple dan lebih mudah dibaca dibanding XML.
+- Integrasi dengan Bahasa Pemrograman lainnya<br>
+  JSON secara alami terintegrasi dengan bahasa JavaScript. Ini dapat memberikan kemudahan bagi pengembang aplikasi web.
+- Tren Industri<br>
+  Banyak API dan web service saat ini dalam menggunakan JSON sebagai format data standar. Ini dapat memudahkan para pengembang untuk berkontribusi dan memudahkan dalam pertukaran data.
+
+## 3. Fungsi dari method `is_valid()` pada form Django
+
+a. Validasi Data<br>
+&emsp; Proses validasi dibutuhkan untuk mengecek data yang dimasukkan  oleh user sesuai dengan yang kriteria yang telah ditetapkan.<br><br>
+b. Error Handling<br>
+&emsp; Memunculkan pesan error saat data yang dimasukkan tidak sesuai dengan apa yang telah ditentukan. <br><br>
+c. Cleaning Data<br>
+&emsp;  Ketika data sudah valid, maka Django akan menyimpan data tersebut didalam atribut `cleaned_data`. Kumpulan data ini merupakan data yang sudah dibersihkan dan sesuai dengan ketentuan yang telah dibuat.
+<br><br>
+Method ini sangat kita butuhkan untuk memastikan bahwa data yang akan disimpan di dalam database adalah data yang valid dan konsisten sehingga ini dapat menjamin kualitas, menghindari kesalahan input data ke dalam sistem, dan juga dapat mencegah serangan injeksi SQL / XSS.
+
+## 4. Mengapa kita membutuhkan `csrf_token` saat membuat form di Django? 
+* Mencegah serangan CSRF (Cross-Site Request Forgery)<br>
+   `csrf_token` melindungi aplikasi web dari serangan CSRF yang terjadi ketika seorang penyerang membuat sebuah form tersembunyi di situs web mereka yang menargetkan situs web lain yang kita gunakan.
+* Memastikan Autentikasi Pengguna.<br>
+  `csrf_token` memastikan bahwa permintaan yang dikirimkan ke server berasal dari pengguna yang sebenarnya dan bukan dari sebuah injeksi script dari penyerang.
+
+  ### Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django?
+
+  Aplikasi yang kita buat akan rentan terhadap serangan CSRF. Penyerang juga bisa memanipulasi data dengan mengirim permintaan palsu yang terlihat sah sehingga dapat berakibat fatal terutama jika melibatkan keuangan atau data pribadi yang sensitif.
+
+  ### Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+
+  Penyerang dapat membuat form tersembunyi didalam web mereka yang secara otomatis mengirimkan permintaan POST ke situs web target. Penyerang juga dapat mengirim permintaan palsu dari situs mereka ke aplikasi target dengan menggunakan akses pengguna yang sudah terotentikasi dan server akan menerima permintaan yang terlihat sah sehingga penyerang dapat langsung mengakses dengan menggunakan data yang telah terkirim.
+
+  ## 5. Proses Pembuatan Form
+
+  Langkah-langkah:
+  ### Buat suatu file baru bernama `forms.py` yang terletak di aplikasi main.
+  Buat suatu form baru bernama `ProductForm` yang menerima `ModelForm`
+    
+    ```python   
+    from django.forms import ModelForm
+    from main.models import Product
+
+    class ProductForm(ModelForm):
+        class Meta:
+            model = Product
+            fields = ["name", "description", "price", "stock", "rating"]
+    ```
+
+    ### Membuat fungsi baru pada `views.py`
+
+    Buat suatu fungsi baru bernama `create_product(request)` yang bertujuan untuk menambahkan data Product ketika mensubmit di dalam form
+
+    ```python
+    # views.py
+    def create_product(request):
+        form = ProductForm(request.POST or None)
+
+        if form.is_valid() and request.method == "POST":
+            form.save()
+            return redirect('main:show_main')
+
+        context = {'form': form}
+        return render(request, "create_product.html", context)
+    ```
+
+    ### Membuat Template HTML
+
+    Setelah menambhakan fungsi pada `views.py`, buatlah template HTML pada `create_product.html` untuk menampilkan halaman form.
+    ```html
+    {% extends 'base.html' %} 
+    {% block content %}
+    <h1>Add New Product</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Add Product" />
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    {% endblock %}
+    ```
+
+    ### Melakukan Routing pada `urls.py` 
+
+    Routing dilakukan untuk mengakses form yang telah dibuat dengan menambahkan perintah sebagai berikut.
+
+    ```python
+    app_name = 'main'
+
+    urlpatterns = [
+        path('', show_main, name='show_main'),
+        path('create-product', create_product, name='create_product'),
+        ...
+    ]
+    ```
+
+    ### Membuat 4 fungsi untuk menampilkan objek dengan XML, JSON, XML by ID, dan JSON by ID
+
+
+    Buka file `views.py` dan tambahkan 4 fungsi sebagai berikut
+
+    ```python
+    # Untuk Menampilkan dalam XML
+    def show_xml(request):
+        data = Product.objects.all()
+        return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+    # Utk menampilkan dakam JSON
+    def show_json(request):
+        data = Product.objects.all()
+        return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+    # utk menampilkan dalam XML by ID
+    def show_xml_by_id(request, id):
+        data = Product.objects.filter(pk=id)
+        return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+    # utk menampilkan dakam JSON by ID
+    def show_json_by_id(request, id):
+        data = Product.objects.filter(pk=id)
+        return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+    ```
+
+    ### Membuat Routing pada `utls.py` di aplikasi main
+
+    Pada `urls.py` tambahkan beberapa line berikut pada `url_patterns`
+    ```python
+    from django.urls import path
+    from main.views import show_main, create_product, show_xml, show_json, show_json_by_id, show_xml_by_id
+
+    app_name = 'main'
+
+    url_patterns = [
+        ...
+        path('xml/', show_xml, name='show_xml'),
+        path('json/', show_json, name='show_json'),
+        path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
+        path('json/<str:id>/', show_json_by_id, name='show_json_by_id')
+    ]
+    ```
+    Hal ini bertujuan agar semua fungsi yg telah dibuat di `views.py` dapat diakses oleh django.
 
