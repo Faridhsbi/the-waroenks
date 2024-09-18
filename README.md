@@ -156,7 +156,7 @@ def show_json_by_id(request, id):
 
 ```
 
-### Membuat Routing pada `utls.py` di aplikasi main
+### Membuat Routing pada `urls.py` di aplikasi main
 
 Pada `urls.py` tambahkan beberapa line berikut pada `url_patterns`
 ```python
