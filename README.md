@@ -58,13 +58,13 @@ Method ini sangat kita butuhkan untuk memastikan bahwa data yang akan disimpan d
 
   Penyerang dapat membuat form tersembunyi didalam web mereka yang secara otomatis mengirimkan permintaan POST ke situs web target. Penyerang juga dapat mengirim permintaan palsu dari situs mereka ke aplikasi target dengan menggunakan akses pengguna yang sudah terotentikasi dan server akan menerima permintaan yang terlihat sah sehingga penyerang dapat langsung mengakses dengan menggunakan data yang telah terkirim.
 
-  ## 5. Proses Pembuatan Form
+## 5. Proses Pembuatan Form
 
-  Langkah-langkah:
-  ### Buat suatu file baru bernama `forms.py` yang terletak di aplikasi main.
+Langkah-langkah:
+### Buat suatu file baru bernama `forms.py` yang terletak di aplikasi main.
   Buat suatu form baru bernama `ProductForm` yang menerima `ModelForm`
     
-    ```python   
+```python   
     from django.forms import ModelForm
     from main.models import Product
 
@@ -72,13 +72,12 @@ Method ini sangat kita butuhkan untuk memastikan bahwa data yang akan disimpan d
         class Meta:
             model = Product
             fields = ["name", "description", "price", "stock", "rating"]
-    ```
-
-    ### Membuat fungsi baru pada `views.py`
+```
+### Membuat fungsi baru pada `views.py`
 
     Buat suatu fungsi baru bernama `create_product(request)` yang bertujuan untuk menambahkan data Product ketika mensubmit di dalam form
 
-    ```python
+```python
     # views.py
     def create_product(request):
         form = ProductForm(request.POST or None)
@@ -89,12 +88,13 @@ Method ini sangat kita butuhkan untuk memastikan bahwa data yang akan disimpan d
 
         context = {'form': form}
         return render(request, "create_product.html", context)
-    ```
+```
 
-    ### Membuat Template HTML
+### Membuat Template HTML
 
-    Setelah menambhakan fungsi pada `views.py`, buatlah template HTML pada `create_product.html` untuk menampilkan halaman form.
-    ```html
+Setelah menambhakan fungsi pada `views.py`, buatlah template HTML pada `create_product.html` untuk menampilkan halaman form.
+
+```html
     {% extends 'base.html' %} 
     {% block content %}
     <h1>Add New Product</h1>
@@ -113,13 +113,12 @@ Method ini sangat kita butuhkan untuk memastikan bahwa data yang akan disimpan d
     </form>
 
     {% endblock %}
-    ```
+```
 
-    ### Melakukan Routing pada `urls.py` 
+### Melakukan Routing pada `urls.py` 
+Routing dilakukan untuk mengakses form yang telah dibuat dengan menambahkan perintah sebagai berikut.
 
-    Routing dilakukan untuk mengakses form yang telah dibuat dengan menambahkan perintah sebagai berikut.
-
-    ```python
+```python
     app_name = 'main'
 
     urlpatterns = [
@@ -127,72 +126,72 @@ Method ini sangat kita butuhkan untuk memastikan bahwa data yang akan disimpan d
         path('create-product', create_product, name='create_product'),
         ...
     ]
-    ```
+```
 
-    ### Membuat 4 fungsi untuk menampilkan objek dengan XML, JSON, XML by ID, dan JSON by ID
+### Membuat 4 fungsi untuk menampilkan objek dengan XML, JSON, XML by ID, dan JSON by ID
 
 
-    Buka file `views.py` dan tambahkan 4 fungsi sebagai berikut
+Buka file `views.py` dan tambahkan 4 fungsi sebagai berikut
 
-    ```python
-    # Untuk Menampilkan dalam XML
-    def show_xml(request):
-        data = Product.objects.all()
-        return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+```python
+# Untuk Menampilkan dalam XML
+def show_xml(request):
+    data = Product.objects.all()
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
-    # Utk menampilkan dakam JSON
-    def show_json(request):
-        data = Product.objects.all()
-        return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+# Utk menampilkan dakam JSON
+def show_json(request):
+    data = Product.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
-    # utk menampilkan dalam XML by ID
-    def show_xml_by_id(request, id):
-        data = Product.objects.filter(pk=id)
-        return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+# utk menampilkan dalam XML by ID
+def show_xml_by_id(request, id):
+    data = Product.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
-    # utk menampilkan dakam JSON by ID
-    def show_json_by_id(request, id):
-        data = Product.objects.filter(pk=id)
-        return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+# utk menampilkan dakam JSON by ID
+def show_json_by_id(request, id):
+    data = Product.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
-    ```
+```
 
-    ### Membuat Routing pada `utls.py` di aplikasi main
+### Membuat Routing pada `utls.py` di aplikasi main
 
-    Pada `urls.py` tambahkan beberapa line berikut pada `url_patterns`
-    ```python
-    from django.urls import path
-    from main.views import show_main, create_product, show_xml, show_json, show_json_by_id, show_xml_by_id
+Pada `urls.py` tambahkan beberapa line berikut pada `url_patterns`
+```python
+from django.urls import path
+from main.views import show_main, create_product, show_xml, show_json, show_json_by_id, show_xml_by_id
 
-    app_name = 'main'
+app_name = 'main'
 
-    url_patterns = [
-        ...
-        path('xml/', show_xml, name='show_xml'),
-        path('json/', show_json, name='show_json'),
-        path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
-        path('json/<str:id>/', show_json_by_id, name='show_json_by_id')
-    ]
-    ```
-    Hal ini bertujuan agar semua fungsi yg telah dibuat di `views.py` dapat diakses oleh django.
+url_patterns = [
+    ...
+    path('xml/', show_xml, name='show_xml'),
+    path('json/', show_json, name='show_json'),
+    path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<str:id>/', show_json_by_id, name='show_json_by_id')
+]
+```
+Hal ini bertujuan agar semua fungsi yg telah dibuat di `views.py` dapat diakses oleh django.
 
-    ## Screenshot Postman
+## Screenshot Postman
 
-    ### JSON
+### JSON
 
-    ![image](https://github.com/user-attachments/assets/2d2a4043-a378-4bba-a49b-5f09055c9c27)
+![image](https://github.com/user-attachments/assets/2d2a4043-a378-4bba-a49b-5f09055c9c27)
 
-    ### XML 
+### XML 
 
-    ![image](https://github.com/user-attachments/assets/5c064bc4-a066-4421-a5ea-f8513832613e)
+![image](https://github.com/user-attachments/assets/5c064bc4-a066-4421-a5ea-f8513832613e)
 
-    ### JSON by ID
+### JSON by ID
 
-    ![image](https://github.com/user-attachments/assets/d6b88e8b-3cc0-47c7-b4ca-75a220d59631)
+![image](https://github.com/user-attachments/assets/d6b88e8b-3cc0-47c7-b4ca-75a220d59631)
 
-    ### XML by ID
+### XML by ID
 
-    ![image](https://github.com/user-attachments/assets/3766ee0a-6ca0-4112-9ef9-0f8afffacc4a)
+![image](https://github.com/user-attachments/assets/3766ee0a-6ca0-4112-9ef9-0f8afffacc4a)
 
 <hr>
 
