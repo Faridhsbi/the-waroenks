@@ -3,13 +3,13 @@
 }
 
 h1{
-    font-family: Verdana, sans-serif;
+    font-family:  "Berkshire Swash", serif, Verdana;
     text-align: center;
 }
 
 body{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background-color: rgb(241, 241, 241);
+    font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(239, 239, 239);
     margin-left: 30px;
     margin-top: 0;
     margin-right: 30px;
@@ -18,15 +18,18 @@ body{
 }
 
 #submit {
+    color:aliceblue ;
     block-size: 30px;
+    width: 150px;
+    border: 0;
     margin: auto;
     font-size: medium;
     align-items: center;
     border-radius: 10px; 
-    background-color: #FFA630;
+    background-color: #FC9918;
 }
 #submit:hover {
-    background-color: #ffd49c;
+    background-color: #cf7704;
 }
 #nama_produk {
     margin-left: 10px;
@@ -51,26 +54,32 @@ body{
     width: 350px;
     height: 350px;
     
-    background-color: #D7E8BA;
+    background-color: #c0d6ff;
     font-size: larger;
-    border: 2px solid;
+    border: 1px solid;
     border-radius: 20px;
     padding : 2em;
     margin-top: 20px;
-
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
     position: relative;
 
 }
+
+.box:hover {
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
 #inbox1 {
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-wrap: wrap;
+    font-size: 20px;
     text-align: center;
 }
 #inbox2{
-    text-align: left;
-    font-size: 17px;
+    text-align: center;
+    font-size: 22px;
     /* padding-inline: 55px; */
-    margin-left: 3em;
+
     position: absolute;
+    /* padding-inline: 3em; */
     bottom: 2em;
-    left: 2em;
+    left: 30%;
 }

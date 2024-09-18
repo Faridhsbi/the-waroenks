@@ -5,10 +5,14 @@
     <title>{{ app_name }}</title>
     {% load static %}  
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,375;1,375&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
-    <h1 style="font-size: 50px;"><span style="color: blue;">The</span><span style="color: tomato;">Waroenks</span></h1>
+    <h1 style="font-size: 75px;"><span style="color: #35589A;">The</span><span style="color: tomato;">Waroenks</span></h1>
   </header>
     <!-- <p><tt>At {{ app_name }}, we offer a unique collection of high-quality products from fashion and accessories to home essentials.<br> 
       Whatever you’re searching for, we’re committed to providing an enjoyable and satisfying shopping experience.</tt></p> -->
@@ -26,14 +30,13 @@
     {% for product in products %}
       <div class="box">
         <div id="inbox1">
-          <h2 style="line-height: 5px;">{{product.name}}</h2>
-          <p >{{product.description}}</p>
+          <h2 style="line-height: 5px; font-weight:bold; ">{{product.name}}</h2>
+          <p style="font-size: 15px;">{{product.description}}</p>
         </div>
         <div id="inbox2">
           <hr>  
-          <pre>Harga  : Rp. {{product.price}}</pre>
-          <pre>Stock  : {{product.stock}}</pre>
-          <pre>Rate   : {{product.rating}} / 5.0</pre>
+          <p>Rp. {{product.price}},00</p>
+          <p>{{product.rating}} / 5.0</p>
         </div>
       </div>
 
