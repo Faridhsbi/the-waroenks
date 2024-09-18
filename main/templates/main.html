@@ -2,6 +2,81 @@
 {% block content %}
 
 <head>
+  <style>
+    * {
+    box-sizing: border-box;
+    }
+
+    h1{
+        font-family:  "Berkshire Swash", serif, Verdana;
+        text-align: center;
+    }
+
+    body{
+        font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
+        background-color: rgb(239, 239, 239);
+        margin-left: 30px;
+        margin-top: 0;
+        margin-right: 30px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+
+    #submit {
+        color:aliceblue ;
+        block-size: 30px;
+        width: 150px;
+        border: 0;
+        margin: auto;
+        font-size: medium;
+        align-items: center;
+        border-radius: 10px; 
+        background-color: #FC9918;
+    }
+    #submit:hover {
+        background-color: #cf7704;
+    }
+    #nama_produk {
+        margin-left: 10px;
+    }
+
+    .box {
+
+        margin: auto;
+        display: inline-table;
+        justify-content: space-evenly;   
+        /* buat ngasih gap antar box */
+        flex-wrap:wrap;
+        width: 350px;
+        height: 350px;
+        background-color: #c0d6ff;
+        font-size: larger;
+        border: 1px solid;
+        border-radius: 20px;
+        padding : 2em;
+        margin-top: 20px;
+        position: relative;
+
+    }
+
+    .box:hover {
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    }
+    #inbox1 {
+        text-wrap: wrap;
+        font-size: 20px;
+        text-align: center;
+    }
+    #inbox2{
+        text-align: center;
+        font-size: 22px;
+        position: absolute;
+        bottom: 2em;
+        left: 30%;
+    }
+
+  </style>
     <title>{{ app_name }}</title>
     {% load static %}  
     <link rel="stylesheet" href="{% static 'style.css' %}">
@@ -12,7 +87,7 @@
 </head>
 <body>
   <header>
-    <h1 style="font-size: 75px;"><span style="color: #35589A;">The</span><span style="color: tomato;">Waroenks</span></h1>
+    <h1 style="font-size: 75px;"><span style="color: #35589A  ;">The</span><span style="color: tomato;">Waroenks</span></h1>
   </header>
     <!-- <p><tt>At {{ app_name }}, we offer a unique collection of high-quality products from fashion and accessories to home essentials.<br> 
       Whatever you’re searching for, we’re committed to providing an enjoyable and satisfying shopping experience.</tt></p> -->
@@ -25,44 +100,23 @@
     </a>
     <br> <br/>
     {% if not products %}
-    <p>Belum ada data product pada The Waroenks.</p>
+      <p>Belum ada data product pada The Waroenks.</p>
     {% else %}
-    {% for product in products %}
-      <div class="box">
-        <div id="inbox1">
-          <h2 style="line-height: 5px; font-weight:bold; ">{{product.name}}</h2>
-          <p style="font-size: 15px;">{{product.description}}</p>
-        </div>
-        <div id="inbox2">
-          <hr>  
-          <p>Rp. {{product.price}},00</p>
-          <p>{{product.rating}} / 5.0</p>
-        </div>
-      </div>
-
-    {% endfor %}
-
-    <!-- <table border="2">
-      <tr align="center" style="background-color: aquamarine;">
-        <th width="200">Product Name</th>
-        <th width="250">Description</th>
-        <th width="100">Price</th>
-        <th width="100">Stock</th>
-        <th width="100">Rating (5.0)</th>
-      </tr>
-    <br><br>
       {% for product in products %}
-      <tr style="background-color: aliceblue;">
-        <td>{{product.name}}</td>
-        <td>{{product.description}}</td>
-        <td align="center">{{product.price}}</td>
-        <td align="center">{{product.stock}}</td>
-        <td align="center">{{product.rating}}</td>
-      </tr>
+        <div class="box">
+          <div id="inbox1">
+            <h2 style="line-height: 5px; font-weight:bold; ">{{product.name}}</h2>
+            <p style="font-size: 15px;">{{product.description}}</p>
+          </div>
+          <div id="inbox2">
+            <hr>  
+            <p>Rp. {{product.price}},00</p>
+            <p>{{product.rating}} / 5.0</p>
+          </div>
+        </div>
       {% endfor %}
-    </table> -->
     {% endif %}
-    
+
     <br />
   
 </body>
