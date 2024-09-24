@@ -17,6 +17,18 @@ body{
     text-align: center;
 }
 
+#logout {
+    color: white;
+    block-size: 20px;
+    width: 60px;
+    border-radius: 5px;
+    border: 0;
+    background-color: red;
+  }
+
+#logout:hover {
+    background-color: rgb(142, 20, 20);
+  }
 
 #submit {
     color:aliceblue ;
@@ -29,11 +41,9 @@ body{
     border-radius: 10px; 
     background-color: #FC9918;
 }
+
 #submit:hover {
     background-color: #cf7704;
-}
-#nama_produk {
-    margin-left: 10px;
 }
 
 .box {
@@ -45,11 +55,11 @@ body{
     flex-wrap:wrap;
     width: 350px;
     height: 350px;
-    background-color: #c0d6ff;
+    background-color: #95bafd;
     font-size: larger;
     border: 1px solid;
     border-radius: 20px;
-    padding : 2em;
+    /* padding : 0; */
     margin-top: 20px;
     position: relative;
 
@@ -58,11 +68,14 @@ body{
 .box:hover {
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
+
+
 #inbox1 {
     text-wrap: wrap;
     font-size: 20px;
     text-align: center;
 }
+
 #inbox2{
     text-align: center;
     font-size: 22px;

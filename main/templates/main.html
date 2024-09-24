@@ -2,7 +2,7 @@
 {% block content %}
 
 <head>
-  <style>
+  <!-- <style>
     * {
     box-sizing: border-box;
     }
@@ -21,8 +21,19 @@
         margin-bottom: 20px;
         text-align: center;
     }
-
-
+    
+    #logout {
+      color: white;
+      block-size: 20px;
+      width: 60px;
+      border-radius: 5px;
+      border: 0;
+      background-color: red;
+    }
+    #logout:hover {
+      background-color: rgb(142, 20, 20);
+    }
+    
     #submit {
         color:aliceblue ;
         block-size: 30px;
@@ -34,11 +45,9 @@
         border-radius: 10px; 
         background-color: #FC9918;
     }
+
     #submit:hover {
         background-color: #cf7704;
-    }
-    #nama_produk {
-        margin-left: 10px;
     }
 
     .box {
@@ -54,7 +63,7 @@
         font-size: larger;
         border: 1px solid;
         border-radius: 20px;
-        padding : 2em;
+        /* padding : 0; */
         margin-top: 20px;
         position: relative;
 
@@ -63,11 +72,14 @@
     .box:hover {
         box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     }
+
+
     #inbox1 {
         text-wrap: wrap;
         font-size: 20px;
         text-align: center;
     }
+
     #inbox2{
         text-align: center;
         font-size: 22px;
@@ -76,7 +88,7 @@
         left: 30%;
     }
 
-  </style>
+  </style> -->
     <title>{{ app_name }}</title>
     {% load static %}  
     <link rel="stylesheet" href="{% static 'style.css' %}">
@@ -92,8 +104,12 @@
     <!-- <p><tt>At {{ app_name }}, we offer a unique collection of high-quality products from fashion and accessories to home essentials.<br> 
       Whatever you’re searching for, we’re committed to providing an enjoyable and satisfying shopping experience.</tt></p> -->
     <br>
-    <strong> Name : </strong> {{ name }}<br>
-    <strong> Class : </strong> {{ class }} <br>
+    <p>Welcome, <strong> {{ name }}</strong>!!!</p><br>
+
+    <h5>Sesi terakhir login: {{ last_login }}</h5>
+    <a href="{% url 'main:logout' %}">
+      <button id="logout">Logout</button>
+    </a>
     <br><br/>
     <a href="{% url 'main:create_product' %}">
       <button id="submit">Add New Product</button>
@@ -105,11 +121,12 @@
       {% for product in products %}
         <div class="box">
           <div id="inbox1">
-            <h2 style="line-height: 5px; font-weight:bold; ">{{product.name}}</h2>
+            <h2 style=" font-weight:bold; ">{{product.name}}</h2>
             <p style="font-size: 15px;">{{product.description}}</p>
           </div>
           <div id="inbox2">
-            <hr>  
+            <br><br><br>
+  
             <p>Rp. {{product.price}},00</p>
             <p>{{product.rating}} / 5.0</p>
           </div>
