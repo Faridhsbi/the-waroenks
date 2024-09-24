@@ -121,7 +121,13 @@ Tidak semua cookie aman digunakan. Jika cookies berisi informasi sensitif sepert
   ]
   ```
 ### Membuat Dua Akun Pengguna dengan Dummy Data
-
+ 
+  1. Buka halaman login
+  2. Klik `Register Now` untuk menuju ke halaman Register dan dapat melakukan registrasi akun 
+  3. Klik Daftar, agar akun yang telah dibuat dapat tersimpan di database (Lakukan Register sebanyak 2 kali)
+  4. Login dengan akun yang telah dibuat
+  5. Terakhir tambahkan Product dengan mengklik button `Add New Product`
+  6. isi semua form nya dan `Add product` untuk menyimpan data product di database. Lakukan sebanyak 3 kali untuk menambahkan 3 dummy data setiap akunnya.
 
 ### Menghubungkan Model Product dengan User
 Di dalam Product, tambahkan ForeignKey ke User agar setiap product dapat dikaitkan ke user masing-masing

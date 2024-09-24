@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 
+{% block meta %}
+<title>Login</title>
+{% endblock meta %}
+
 <head>
-  <style>
+  <!-- <style>
     * {
-        box-sizing: border-box;
+    box-sizing: border-box;
     }
 
     h1{
@@ -21,20 +25,19 @@
         margin-bottom: 20px;
         text-align: center;
     }
-
+    
     #logout {
-        color: white;
-        block-size: 20px;
-        width: 60px;
-        border-radius: 5px;
-        border: 0;
-        background-color: red;
-      }
-
+      color: white;
+      block-size: 20px;
+      width: 60px;
+      border-radius: 5px;
+      border: 0;
+      background-color: red;
+    }
     #logout:hover {
-        background-color: rgb(142, 20, 20);
-      }
-
+      background-color: rgb(142, 20, 20);
+    }
+    
     #submit {
         color:aliceblue ;
         block-size: 30px;
@@ -60,7 +63,7 @@
         flex-wrap:wrap;
         width: 350px;
         height: 350px;
-        background-color: #95bafd;
+        background-color: #c0d6ff;
         font-size: larger;
         border: 1px solid;
         border-radius: 20px;
@@ -88,11 +91,10 @@
         bottom: 2em;
         left: 30%;
     }
-  </style>
-    <title>{{ app_name }}</title>
 
-    <!-- {% load static %}   -->
-    <!-- <link rel="stylesheet" href="{% static 'style.css' %}"> -->
+  </style> -->
+    {% load static %}  
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
