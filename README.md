@@ -128,6 +128,13 @@ Tidak semua cookie aman digunakan. Jika cookies berisi informasi sensitif sepert
   4. Login dengan akun yang telah dibuat
   5. Terakhir tambahkan Product dengan mengklik button `Add New Product`
   6. isi semua form nya dan `Add product` untuk menyimpan data product di database. Lakukan sebanyak 3 kali untuk menambahkan 3 dummy data setiap akunnya.
+  
+  akun satu,
+  ![image](https://github.com/user-attachments/assets/63691700-29e3-40af-ae33-9a9c6d5ba12d)
+ 
+  akun dua, 
+  ![Screenshot 2024-09-25 112919](https://github.com/user-attachments/assets/179d49c1-2351-483c-a936-ebc8fd74a202)
+
 
 ### Menghubungkan Model Product dengan User
 Di dalam Product, tambahkan ForeignKey ke User agar setiap product dapat dikaitkan ke user masing-masing
