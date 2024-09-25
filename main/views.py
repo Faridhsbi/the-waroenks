@@ -1,4 +1,3 @@
-
 import datetime
 from django.shortcuts import render, redirect 
 from main.forms import ProductForm
@@ -69,9 +68,6 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
-
-
-
 
 def show_xml(request):
     data = Product.objects.all()
