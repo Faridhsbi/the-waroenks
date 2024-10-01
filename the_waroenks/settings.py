@@ -28,7 +28,7 @@ PRODUCTION = os.getenv("PRODUCTION", False)
 DEBUG = not PRODUCTION
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "muhammad-farid31-thewaroenks.pbp.cs.ui.ac.id"]
-
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://muhammad-farid31-thewaroenks.pbp.cs.ui.ac.id", "https://muhammad-farid31-thewaroenks.pbp.cs.ui.ac.id"]
 
 # Application definition
 
@@ -120,8 +120,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static' # merujuk ke /static root project pada mode development
+    ]
+else:
+    STATIC_ROOT = BASE_DIR / 'static' # merujuk ke /static root project pada mode production
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

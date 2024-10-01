@@ -1,0 +1,122 @@
+{% load static %}
+<style>
+  .star-rating {
+    display: inline-block;
+    font-size: 0; /* Menghilangkan spasi antar elemen inline-block */
+    position: relative;
+  }
+
+  .stars-outer {
+    display: inline-block;
+    position: relative;
+    font-size: 30px; /* Ukuran bintang */
+    color: #ccc; /* Warna bintang yang belum terisi */
+  }
+
+  .stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    color: #f8ce0b; /* Warna bintang yang terisi */
+  }
+
+  .stars-outer::before {
+    content: "★★★★★"; /* 5 bintang */
+  }
+
+  .stars-inner::before {
+    content: "★★★★★"; /* 5 bintang */
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      const rating = {{ product.rating }}; // Nilai rating dari backend, bisa diisi dinamis
+      const starTotal = 5.0;
+
+      // Menghitung persentase bintang yang terisi
+      const starPercentage = (rating / starTotal) * 100;
+
+      // Membulatkan persentase menjadi kelipatan terdekat dari 10
+      const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+
+      // Mengubah lebar dari div .stars-inner
+      document.querySelector(".stars-inner").style.width = starPercentageRounded;
+
+      // Menampilkan nilai rating
+      document.querySelector(".rating-value").innerText = rating;
+  });
+</script>
+
+<div class="page relative break-inside-avoid transform duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-100 text-white">
+
+  <div class="relative top-5 card shadow-md rounded-lg mb-6 break-inside-avoid flex flex-col border-50">
+    <div class=" card-head p-4 rounded-t-lg">
+      {% comment %} <img src="{% static '/image/food.png' %}" alt="{{ product.name }}" class="w-20 h-20"> {% endcomment %}
+      <h3 class="font-bold text-xl text-white mb-2">{{product.name}}</h3>
+      <p class="text-white ">{{product.description}}</p>
+    </div>
+    <div class="p-4">
+      <div class="star-rating">
+        <div class="stars-outer">
+          <div class="stars-inner" style="width: 0"></div>
+        </div>
+        <span class="rating-value">0.0</span>
+      </div>
+      <p class="font-light">
+        {% if product.stock > 0 %}In stock{% else %}Sold out
+      </p>
+        {% endif %}
+      <p class="font-semibold text-lg mb-2 ">Rp. {{product.price}}</p>
+      <div class="mt-4">
+        <div class="relative pt-1"></div>
+      </div>
+    </div>
+  </div>
+    <div class="absolute  -bottom-5 end-5 flex space-x-2">
+      <a href="{% url 'main:edit_product' product.pk %}" class="bg-white  hover:bg-gray-200 rounded-full p-2 transition duration-300 shadow-md">
+        <img src="{% static '/image/pencil.png' %}" alt="Sad face" class="w-9 h-9"/>
+      </a>
+      <a href="{% url 'main:delete_product' product.pk %}" class="bg-white hover:bg-gray-200 rounded-full p-2 transition duration-300 shadow-md">
+       <img src="{% static '/image/trash.png' %}" alt="Sad face" class="w-9 h-9"/>
+      </a>
+    </div>
+</div> 
+{% comment %} 
+<div class="card shadow-md rounded-lg overflow-hidden">
+  <img src="{% static '/image/food.png' %}" alt="{{ product.name }}" class="w-full">
+  <div class="p-4">
+    <div class="flex items-center justify-between mb-2">
+      <div class="flex space-x-2">
+        <button type="button" class="rounded-full p-2 hover:bg-gray-200">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+        </button>
+        <button type="button" class="rounded-full p-2 hover:bg-gray-200">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.682 16.318a4.5 4.5 0 010-6.364L12 7.636l1.318-1.318a4.5 4.5 0 016.364 0L21.364 12l-7.682 7.682a4.5 4.5 0 01-6.364 0L12 15.272l-1.318 1.318a4.5 4.5 0 01-6.364 0z"></path></svg>
+        </button>
+      </div>
+      <button type="button" class="rounded-full p-2 hover:bg-gray-200">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+      </button>
+    </div>
+    <button class="bg-green-500 text-white px-4 py-2 rounded-md w-full hover:bg-green-600">
+      <span class="mr-2">+</span> Add to cart
+    </button>
+    <div class="flex items-center mt-2">
+      <div class="star-rating">
+        <div class="stars-inner flex" style="width: 0"></div>
+      </div>
+      <span class="rating-value ml-2">0.0</span>
+    </div>
+    <p class="font-light">
+      {% if product.stock > 0 %}In stock{% else %}Sold out
+    </p>
+    {% endif %}
+    <p class="font-semibold text-lg mb-2 ">Rp. {{product.price}}</p>
+  </div>
+</div> {% endcomment %}
+
+

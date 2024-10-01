@@ -6,6 +6,170 @@ Kelas : PBP D <br>
 Link PWS : [The Waroenks](http://muhammad-farid31-thewaroenks.pbp.cs.ui.ac.id/)
 <hr>
 
+# TUGAS 5
+
+##  Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+Ketika beberapa selector diterapkan pada elemen yang sama, ada aturan prioritas yang menentukan gaya mana yang akan diterapkan. Urutan prioritas ini diurutkan sebagai berikut:
+  1. Inline Styles (contoh style="color: tomato;") memiliki prioritas tertinggi karena gaya ini paling spesifik untuk elemen tersebut.
+  2. ID Selector (contoh #first{ color: tomato; }) memiliki prioritas lebih tinggi dari class atau elemen karena setiap elemen hanya boleh memiliki satu ID unik.
+  3. Class Selector (contoh .myClass { font-size: 10px; }) memiliki rioritas lebih rendah dari ID selector, tetapi lebih spesifik daripada element selector.
+  4. Tag Selector (contoh p { font-family: Arial; }) memiliki prioritas rendah karena menargetkan semua elemen dengan jenis yang sama.
+  5. Aturan Umum (contoh * { margin: 0; padding: 0; }) Mempengaruhi semua elemen di halaman dan memiliki prioritas paling rendah.
+## Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
+Responsive design adalah konsep pengembangan website yang memungkinkan tampilan website menyesuaikan diri secara otomatis dengan ukuran layar perangkat yang digunakan oleh pengguna. 
+### Manfaat responsive design:
+  * Pengalaman pengguna yang lebih baik: Pengguna dapat mengakses website dengan mudah dari berbagai perangkat.
+  * SEO yang lebih baik: Website yang responsive cenderung memiliki peringkat yang lebih tinggi di mesin pencari.
+  * Biaya pengembangan yang lebih rendah: Anda hanya perlu membuat satu versi website untuk semua perangkat.
+### Contoh website yang responsive:
+  * Instagram
+  * Wikipedia
+### Contoh website yang belum responsive:
+
+
+
+## Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+
+![image](https://github.com/user-attachments/assets/d1e00a22-7ac1-4478-8115-c87f7e35b4a6)
+
+* Margin: Merupakan ruang kosong di luar batas suatu elemen. Margin digunakan untuk mengatur jarak antara elemen satu dengan elemen lainnya.
+* Border: Adalah garis batas yang mengelilingi suatu elemen.
+* Padding: Merupakan ruang kosong di dalam batas suatu elemen, antara konten dan batas elemen tersebut. Padding digunakan untuk memberikan ruang pada konten di dalam elemen.
+
+### Implementasi
+```css
+.box {
+  width: 200px;
+  background-color: lightblue;
+  border: 2px solid black;  /* */
+  padding: 20px;
+  margin: 20px;
+}
+```
+
+
+## Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+### Flex Box
+Flexbox dirancang untuk tata letak satu dimensi, baik itu secara horizontal (baris) atau vertikal (kolom). Flexbox mudah digunakan untuk layout yang lebih sederhana, seperti navbar, header, atau footer. <br>
+Contoh penggunaannya :
+* Membuat navbar yang responsif
+* Menyusun kartu produk dalam satu baris
+* Membuat formulir dengan label dan input yang sejajar <br>
+Implementasi :
+```css
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+```
+### Grid
+Grid Layout adalah sistem tata letak dua dimensi yang lebih kuat dan fleksibel daripada Flexbox. Grid memungkinkan pengaturan elemen baik dalam baris maupun kolom secara bersamaan.Grid juga cocok untuk layout yang lebih rumit, seperti tata letak utama halaman web dengan sidebar dan konten utama. <br>
+Contoh penggunaan : 
+* Membuat layout halaman utama dengan sidebar dan konten utama
+* Membuat galeri gambar dengan beberapa kolom
+* Membuat tata letak tabel yang kompleks
+
+Implementasi : 
+```css
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+```
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step!
+
+### Implementasi edit_product dan delete_product pada views.py
+* Pada `views.py`,tambahkan beberapa kode sebagai berikut agar kita dapat mengimplementasi edit dan delete product pada aplikasi main 
+```python
+ def edit_product(request, id):
+    product = Product.objects.get(pk = id)
+
+    form = ProductEntryForm(request.POST or None, instance=product)
+
+    if form.is_valid() and request.method == "POST":
+      form.save()
+      return HttpResponseRedirect(reverse('main:show_main'))
+    
+    context = {'form': form}
+    return render(request, "edit_product.html", context)
+
+ def delete_product(request, id):
+    product = Product.objects.get(pk = id)
+    product.delete()
+    
+    return HttpResponseRedirect(reverse('main:show_main'))
+```
+* Lakukan routing pada urls.py
+```python
+...
+path('edit-product/<uuid:id>', edit_product, name='edit_product'),
+path('delete/<uuid:id>', delete_product, name='delete_product'),
+```
+
+* Menambahkan file `edit_product.html` pada direktori `main/templates`
+* Menambahkan button pada setiap product agar dapat diimplemen pada tiap produknya
+```html
+<tr>
+ ...
+ <td>
+     <a href="{% url 'main:edit_product' product.pk %}">
+         <button>
+             Edit
+         </button>
+     </a>
+ </td>
+ <td>
+     <a href="{% url 'main:delete_product' product.pk %}">
+         <button>
+             Delete
+         </button>
+     </a>
+ </td>
+</tr>
+```
+### Kustomisasi daftar product dan membuatnya menjadi responsif
+
+* Buat direktori `static/css` pada root folder untuk menerapkan css pada template di aplikasi main dan Setting Static files pada `settings.py` sebagai berikut
+
+```python
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', #Tambahkan tepat di bawah SecurityMiddleware
+    ...
+]
+...
+STATIC_URL = '/static/'
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static' # merujuk ke /static root project pada mode development
+    ]
+else:
+    STATIC_ROOT = BASE_DIR / 'static' # merujuk ke /static root project pada mode production
+...
+
+```
+
+* Menambahkan file  `global.css` pada `main/css` dan menghubungkan file css tersebut dengan cara 
+```html
+<head>
+   ...
+   <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
+</head>
+```
+
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+
 # TUGAS 4
 
 ## Apa perbedaan antara HttpResponseRedirect() dan redirect()?
