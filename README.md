@@ -25,8 +25,7 @@ Responsive design adalah konsep pengembangan website yang memungkinkan tampilan 
   * Instagram
   * Wikipedia
 ### Contoh website yang belum responsive:
-
-
+  * SIAK-NG
 
 ## Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
 
@@ -156,6 +155,8 @@ else:
    <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
 </head>
 ```
+* Buat file `navbar.html` pada direktori `/templates` di root folder untuk kustomisasi navbar dan juga tambahkan `card_product.html` untuk kustomisasi card per product pada `main.html`.
+* Terakhir, kustomisasi kembali semua file yang diperlukan untuk dikustom agar lebih menarik.
 
 
 
