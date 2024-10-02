@@ -16,11 +16,10 @@ Ketika beberapa selector diterapkan pada elemen yang sama, ada aturan prioritas 
   4. Tag Selector (contoh p { font-family: Arial; }) memiliki prioritas rendah karena menargetkan semua elemen dengan jenis yang sama.
   5. Aturan Umum (contoh * { margin: 0; padding: 0; }) Mempengaruhi semua elemen di halaman dan memiliki prioritas paling rendah.
 ## Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
-Responsive design adalah konsep pengembangan website yang memungkinkan tampilan website menyesuaikan diri secara otomatis dengan ukuran layar perangkat yang digunakan oleh pengguna. 
-### Manfaat responsive design:
+Responsive design adalah konsep pengembangan website yang memungkinkan tampilan website menyesuaikan diri secara otomatis dengan ukuran layar perangkat yang digunakan oleh pengguna. Penerapan responsive design sangatlah penting karena memiliki beberapa manfaat, antara lain :
   * Pengalaman pengguna yang lebih baik: Pengguna dapat mengakses website dengan mudah dari berbagai perangkat.
-  * SEO yang lebih baik: Website yang responsive cenderung memiliki peringkat yang lebih tinggi di mesin pencari.
-  * Biaya pengembangan yang lebih rendah: Anda hanya perlu membuat satu versi website untuk semua perangkat.
+  * SEO yang lebih baik: Website yang responsive cenderung lebih mudah dicar pada search engine seperti google, dll.
+  * Biaya pengembangan yang lebih rendah: kita hanya perlu membuat satu versi website untuk semua perangkat.
 ### Contoh website yang responsive:
   * Instagram
   * Wikipedia
@@ -31,9 +30,9 @@ Responsive design adalah konsep pengembangan website yang memungkinkan tampilan 
 
 ![image](https://github.com/user-attachments/assets/d1e00a22-7ac1-4478-8115-c87f7e35b4a6)
 
-* Margin: Merupakan ruang kosong di luar batas suatu elemen. Margin digunakan untuk mengatur jarak antara elemen satu dengan elemen lainnya.
+* Margin: Merupakan ruang kosong di luar batas/border suatu elemen. Margin digunakan untuk mengatur jarak antara elemen satu dengan elemen lainnya.
 * Border: Adalah garis batas yang mengelilingi suatu elemen.
-* Padding: Merupakan ruang kosong di dalam batas suatu elemen, antara konten dan batas elemen tersebut. Padding digunakan untuk memberikan ruang pada konten di dalam elemen.
+* Padding: Merupakan ruang kosong di dalam batas/border suatu elemen, antara konten dan batas elemen tersebut. Padding digunakan untuk memberikan ruang pada konten di dalam elemen.
 
 ### Implementasi
 ```css
@@ -387,9 +386,9 @@ JSON lebih populer karena :
 - Struktur Data yang simple<br>
   JSON juga memiliki struktur data yang simple dan lebih mudah dibaca dibanding XML.
 - Integrasi dengan Bahasa Pemrograman lainnya<br>
-  JSON secara alami terintegrasi dengan bahasa JavaScript. Ini dapat memberikan kemudahan bagi pengembang aplikasi web.
+  JSON secara alami terintegrasi dengan bahasa JavaScript yang dapat memberikan kemudahan bagi pengembang aplikasi web.
 - Tren Industri<br>
-  Banyak API dan web service saat ini dalam menggunakan JSON sebagai format data standar. Ini dapat memudahkan para pengembang untuk berkontribusi dan memudahkan dalam pertukaran data.
+  Banyak API dan web service saat ini dalam menggunakan JSON sebagai format data standar sehingga dapat memudahkan para pengembang untuk berkontribusi dan memudahkan dalam pertukaran data.
 
 ## 3. Fungsi dari method `is_valid()` pada form Django
 

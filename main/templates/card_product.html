@@ -34,20 +34,17 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-      const rating = {{ product.rating }}; // Nilai rating dari backend, bisa diisi dinamis
+    const ratingContainers = document.querySelectorAll(".star-rating");
+    ratingContainers.forEach((ratingContainer) => {
+      const rating = ratingContainer.dataset.rating; // get the rating value from the data attribute
       const starTotal = 5.0;
-
-      // Menghitung persentase bintang yang terisi
       const starPercentage = (rating / starTotal) * 100;
-
-      // Membulatkan persentase menjadi kelipatan terdekat dari 10
       const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
-
-      // Mengubah lebar dari div .stars-inner
-      document.querySelector(".stars-inner").style.width = starPercentageRounded;
-
-      // Menampilkan nilai rating
-      document.querySelector(".rating-value").innerText = rating;
+      const starsInner = ratingContainer.querySelector(".stars-inner");
+      starsInner.style.width = starPercentageRounded;
+      const ratingValue = ratingContainer.querySelector(".rating-value");
+      ratingValue.innerText = rating;
+    });
   });
 </script>
 
@@ -60,7 +57,7 @@
       <p class="text-white ">{{product.description}}</p>
     </div>
     <div class="p-4">
-      <div class="star-rating">
+      <div class="star-rating" data-rating="{{ product.rating }}">
         <div class="stars-outer">
           <div class="stars-inner" style="width: 0"></div>
         </div>
