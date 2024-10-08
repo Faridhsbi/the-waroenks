@@ -3,21 +3,21 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
-                <img src="{% static '/image/icon.png' %}" alt="Sad face" class="w-10 h-10 mr-2"/>
+                <img src="{% static '/image/icon.png' %}" alt="The Waroenks's Icon" class="w-10 h-10 mr-2 ease-in-out hover:scale-125 hover:rotate-12 transition duration-300"/>
                 <h1 class="text-2xl font-bold text-center text-white"><span class="hover:text-warning">The</span> Waroenks</h1>
             </div>
             <!-- Menu Navigation -->
             <div class="hidden md:flex items-center space-x-4">
                 <a href="#" class="snav text-white  px-3 py-2 rounded transition duration-300">Home</a>
-                <a href="#" class="snav text-white  px-3 py-2 rounded transition duration-300"">Product</a>
-                <a href="#" class="snav text-white  px-3 py-2 rounded transition duration-300"">Categories</a>
-                <a href="#" class="snav text-white  px-3 py-2 rounded transition duration-300"">Cart</a>
+                <a href="#" class="snav text-white  px-3 py-2 rounded transition duration-300">Product</a>
+                <a href="#" class="snav text-white  px-3 py-2 rounded transition duration-300">Categories</a>
+                <a href="#" class="snav text-white  px-3 py-2 rounded transition duration-300">Cart</a>
             </div>
             <div class="hidden md:flex items-center">
                 {% if user.is_authenticated %}
-                    <span class="text-gray-300 mr-4">Welcome, {{ user.username }}</span>
-                    <a href="{% url 'main:logout' %}" class="text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
-                        Logout
+                    <span class="text-gray-300 mr-4">Welcome, <b>{{ user.username }}</b></span>
+                    <a href="{% url 'main:logout' %}" class="text-center hover:scale-125 ease-in-out text-white rounded transition duration-300">
+                    <img src="{% static '/image/logout.png' %}" alt="Log Out" class="w-10 h-10"/>
                     </a>
                 {% else %}
                     <a href="{% url 'main:login' %}" class="text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 mr-2">

@@ -6,6 +6,300 @@ Kelas : PBP D <br>
 Link PWS : [The Waroenks](http://muhammad-farid31-thewaroenks.pbp.cs.ui.ac.id/)
 <hr>
 
+# TUGAS 6
+
+## Manfaat JavaScript dalam pengembangan aplikasi web
+  * Interaktif dan responsif
+    Penggunaan JavaScript memungkinkan elemen-elemen dalam halaman web menjadi lebih interaktif dan responsif terhadap aksi pengguna. Misalnya, ketika pengguna klik atau hover tombol, muncul popup, atau terjadi animasi lainnya.
+  * Validasi Input
+    Dapat digunakan untuk memvalidasi data yang masuk kedalam form. Bertujuan untuk mengurangi kesalahan dan meningkatkan efiesiensi data.
+  * Manipulasi DOM
+    Dapat digunakan untuk memanipulasi Document Object Model (DOM) dengan mengubah struktur, gaya, dan konten halaman web secara dinamis tanpa perlu me-reload seluruh halaman.
+  * Pengembangan Fullstack
+    Dapat digunakan untuk pengembangan front-end maupun back-end. Tersedia banyak library seperti React, Angular, Vue.js untuk front-end, serta Node.js untuk back-end
+
+## Fungsi dari penggunaan await ketika kita menggunakan fetch()
+await adalah sebuah keyword dalam JavaScript yang digunakan untuk menghentikan eksekusi fungsi async sampai sebuah promise diselesaikan. await digunakan bersama dengan fetch() untuk menunggu respon dari server sebelum melanjutkan eksekusi kode selanjutnya.
+
+### Yang terjadi ketika tidak menggunakan await
+Jika kita tidak menggunakan await, kode akan langsung melanjutkan eksekusi tanpa menunggu respon dari server. Dapat menyebabkan data yang tidak tersedia dan kesalahan yang tidak bisa ditangani saat setelah proses eksekusi 
+
+
+## Manfaat decorator csrf_exempt pada view yang digunakan pada AJAX POST
+Decorator csrf_exempt dalam Django digunakan untuk menonaktifkan pemeriksaan Cross-Site Request Forgery (CSRF) pada suatu view. CSRF dirancang untuk melindungi pengguna dari serangan di mana penyerang memanipulasi pengguna yang sudah login untuk mengirimkan permintaan yang tidak sah ke server. Namun, dalam AJAX POST, permintaan berasal dari browser pengguna yang terautentikasi, sehingga risiko serangan CSRF tidak ada.
+
+
+## Alasan mengapa pembersihan data input pengguna tidak dilakukan di frontend saja melainkan juga dilakukan pada backend.
+* Fungsi Keamanan
+  Penyerang dapat memanipulasi input jika hanya pembersihan data hanya dilakukan di front-end. Dengan adanya validasi ulang di backend, kita memiliki lapisan pertahanan tambahan untuk mencegah serangan seperti SQL injection, XSS, dan serangan lainnya.
+* Konsistensi
+  Membersihkan data di backend memastikan bahwa semua pengguna menggunakan aturan yang sama, sehingga data yang disimpan di database selalu konsisten.
+* Pengujian
+  Frontend memberikan umpan balik cepat kepada pengguna, sementara backend bertanggung jawab untuk menjaga integritas data. Karena backend memiliki akses ke seluruh logika aplikasi, ia dapat melakukan validasi yang lebih mendalam dan kompleks untuk mencegah serangan keamanan.
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
+### 1. Ubahlah kode cards data mood agar dapat mendukung AJAX GET.
+  Untuk mengubah kode cards menjadi AJAX, saya membuat sebuah fungsi baru pada `views.py`
+  ```python
+@csrf_exempt
+@require_POST
+def add_product_by_ajax(request):
+    product_name = strip_tags(request.POST.get("product_name", "")).strip()
+    description = strip_tags(request.POST.get("description", "")).strip()
+    price = request.POST.get("price")
+    stock = request.POST.get("stock")
+    rating = request.POST.get("rating")
+    user = request.user
+
+    new_product = Product(
+        product_name=product_name,
+        description=description,
+        price=price,
+        stock=stock,
+        rating=rating,
+        user=user
+    )
+    new_product.save()
+
+    return HttpResponse("CREATED", status=201)
+  ```
+  Kemudian lakukan routing pada `urls.py` dengan menambahkan baris kode berikut
+  ```python
+    ...
+    path('create-ajax', add_product_by_ajax, name='add_product_by_ajax'),
+  ```
+  Kemudian saya menghapus beberapa baris yang sebelumnya diimplementasikan ke fungsi `create_product()` dan menggantinya dengan menambahkan div dengan `id="product_cards"`. Div ini bertujuan agar DOM dapat mengolah data melalui script Javascript dengan menambahkan fungsi ini pada block `script`:
+  ```js
+  async function getProducts() {
+      return fetch("{% url 'main:show_json' %}")
+          .then((res) => res.json())
+          .catch((error) => {
+              console.error("Error fetching products:", error);
+          });
+  }
+  async function refreshProducts() {
+    // Menghapus isi product_cards sebelum diisi ulang
+    document.getElementById("product_cards").innerHTML = "";
+    document.getElementById("product_cards").className = "";
+
+    // Mendapatkan produk dari API atau fungsi getProducts()
+    const products = await getProducts();
+    let htmlString = "";
+    let classNameString = "";
+
+    // Jika tidak ada produk
+    if (products.length === 0) {
+        classNameString = "flex flex-col items-center justify-center min-h-[24rem] p-6";
+        htmlString = `
+            <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+                <img src="{% static 'image/nothing.gif' %}" alt="Sad face" class="w-32 h-32 mb-4"/>
+                <p class="text-center text-gray-600 mt-4">Belum ada data Product pada The Waroenks.</p>
+            </div>
+        `;
+    } else {
+        // Jika produk tersedia, buat layout grid
+        classNameString = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full m-10";
+
+        // Loop melalui setiap produk
+        products.forEach((item) => {
+            const product_name = DOMPurify.sanitize(item.fields.product_name);
+            const description = DOMPurify.sanitize(item.fields.description);
+            const rating = item.fields.rating || 0;
+            const starPercentage = (rating / 5) * 100;
+            htmlString += `
+              <div class="relative break-inside-avoid transform duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 text-white">
+                <div class="relative top-5 card shadow-md rounded-lg mb-6 break-inside-avoid flex flex-col border-50 max-w-md" style="border-radius: 1rem;">
+                  <div class="card-head p-4 rounded-t-lg" style="border-radius: 1rem 1rem 0 0;">
+                    <div class="flex" style="justify-content: center;">
+                      <a class="center relative mx-3 mt-6 mb-6 flex h-72 overflow-hidden rounded-lg" href="#">
+                        <img class="object-cover" src="{% static '/image/food.png' %}" alt="product image" />
+                      </a>
+                    </div>
+                    <h3 class="font-bold text-xl text-white mb-2 m-3">${product_name}</h3>
+                    <p class="text-white m-3" style="word-wrap: break-word; text-align: justify; hyphens: auto;">${description}</p>
+                  </div>
+                  <div class="p-4">
+                    <div class="star-rating p-2" data-rating="${rating}" style="display: inline-block; font-size: 0; position: relative;">
+                      <div>
+                        <div class="stars-outer" style="display: inline-block; position: relative; font-size: 30px; color: #ccc;">
+                          <span style="color: #ccc;">★★★★★</span>
+                          <div class="stars-inner" style="position: absolute; top: 0; left: 0; white-space: nowrap; overflow: hidden; color: #f8ce0b;">
+                            <span>★★★★★</span>
+                          </div>
+                        </div>
+                        <span class="ml-4 rounded px-2.5 py-0.5 text-xs text-black font-bold" style="background-color: #f8ce00; vertical-align: 5px;">${rating}</span>
+                      </div>
+                      <span class="rating-value">0.0</span>
+                    </div>
+                    <p class="font-light ml-3">${item.fields.stock > 0 ? 'In stock' : 'Sold out'}</p>
+                    <p class="font-bold text-lg mb-2 ml-3">Rp. ${item.fields.price}</p>
+                    <div class="mt-4">
+                      <div class="relative pt-1"></div>
+                    </div>
+                  </div>
+                  <div class="absolute -bottom-5 end-5 flex space-x-2">
+                    <a href="/edit-product/${item.pk}" class="bg-white hover:bg-gray-200 rounded-full p-2 transition duration-300 shadow-md">
+                      <img src="{% static '/image/pencil.png' %}" alt="Edit Product" class="w-9 h-9"/>
+                    </a>
+                    <a href="/delete/${item.pk}" class="bg-white hover:bg-gray-200 rounded-full p-2 transition duration-300 shadow-md">
+                      <img src="{% static '/image/trash.png' %}" alt="Delete Product" class="w-9 h-9"/>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              `;
+          });
+      }
+      // Menambahkan class untuk grid/konten produk
+      document.getElementById("product_cards").className = classNameString;
+      // Mengisi konten produk dengan kartu-kartu produk
+      document.getElementById("product_cards").innerHTML = htmlString;
+
+      // Setelah konten produk diisi, jalankan ulang rating bintang
+      const ratingContainers = document.querySelectorAll(".star-rating");
+      ratingContainers.forEach((ratingContainer) => {
+          const rating = parseFloat(ratingContainer.dataset.rating); 
+          const starTotal = 5.0;
+          const starPercentage = (rating / starTotal) * 100; // Cari persentase
+          const starPercentageRounded = `${Math.round(starPercentage)}%`; // Persentase dibulatkan
+          const starsInner = ratingContainer.querySelector(".stars-inner");
+          starsInner.style.width = starPercentageRounded; // Set width dari inner bintang
+          const ratingValue = ratingContainer.querySelector(".rating-value");
+          ratingValue.innerText = rating; // Set teks rating
+      });
+  }
+  refreshProducts();
+  ```
+  ### 2. Lakukan pengambilan data product menggunakan AJAX GET. Pastikan bahwa data yang diambil hanyalah data milik pengguna yang logged-in.
+  Untuk mengambil data product yang sesuai dengan data miliki user, saya menambahkan `user=user` pada add_product_by_ajax :
+  ```python
+  ...
+    new_product = Product(
+        product_name=product_name,
+        description=description,
+        price=price,
+        stock=stock,
+        rating=rating,
+        user=user
+    )
+    new_product.save()
+  ...
+  ```
+
+  ### 3. Buatlah sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan product.
+  Pada `main.html`, didalam div dengan `id="product_card"` yang telah kita buat tadi,  
+  ```html
+    ...
+    <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out ">
+        <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
+          <!-- Modal header -->
+          <div class="flex items-center justify-between p-4 border-b rounded-t">
+            <h3 class="text-xl font-semibold text-gray-900">
+              Add New Product
+            </h3>
+            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex   items-center" id="closeModalBtn">
+              <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+            ......
+            <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end">
+          <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg" id="cancelButton">Cancel</button>
+          <button type="submit" id="submitProduct" form="productForm" class="button text-white font-bold py-2 px-4 rounded-lg">Save</button>
+        </div>
+      </div>
+  </div>
+  ```
+  Ini bertujuan untuk agar ketika button diklik, maka proses buka dan tutup modal akan berjalan, sehingga kita dapat menambahkan 2 fungsi baru di block script
+  ```js
+    function showModal() {
+      const modal = document.getElementById('crudModal');
+      const modalContent = document.getElementById('crudModalContent');
+
+      modal.classList.remove('hidden'); 
+      setTimeout(() => {
+        modalContent.classList.remove('opacity-0', 'scale-95');
+        modalContent.classList.add('opacity-100', 'scale-100');
+      }, 50); 
+  }
+
+  // Fungsi untuk menyembunyikan modal
+  function hideModal() {
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
+
+    modalContent.classList.remove('opacity-100', 'scale-100');
+    modalContent.classList.add('opacity-0', 'scale-95');
+
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 150);
+  }
+  // Event listener untuk tombol Cancel dan Close
+  document.getElementById("cancelButton").addEventListener("click", hideModal);
+  document.getElementById("closeModalBtn").addEventListener("click", hideModal);
+  ```
+  fungsi `show_modal()` akan menampilkan modal, dan fungsi `hide_modal()` akan menutup kembali modal ketika telah digunakan. Selain itu, saya juga menambahkan cancel dan close button agar kita bisa menutup modal ketika tidak jadi digunakan.
+
+### Buatlah fungsi view baru untuk menambahkan product baru ke dalam basis data.
+Untuk validasi input data, saya menambahkan baris validasi pada fungsi add_product_by_ajax() yg telah kita buat tadi,
+```python
+    ...
+    # Validasi Input
+    if (not product_name or product_name != request.POST.get("product_name")) or (not description or description != request.POST.get("description")):
+        return HttpResponse("Invalid Input!!!", status=400)
+    ...
+```
+Validasi akan mereturn respon dengan `status = 400` dan pesan "Invalid Input".
+Kemudian saya juga membuat fungsi baru pada script yaitu add_product agar kita bisa menambahkan data product kita melalui button AJAX terbaru,
+```js
+ // JavaScript (client-side)
+  function addProduct() {
+      const form = document.querySelector('#productForm');
+      const formData = new FormData(form);
+
+      // Validasi input
+      const productName = formData.get('product_name').trim();
+      const description = formData.get('description').trim();
+
+      fetch("{% url 'main:add_product_by_ajax' %}", {
+          method: "POST",
+          body: formData,
+      })
+      .then(response => {
+          if (response.ok) {
+              hideModal(); // menutup ketika berhasil
+              refreshProducts(); // refresh page
+              form.reset(); // reset isi field pada form
+              document.querySelector("[data-modal-toggle='crudModal']").click();
+          } else {
+              return response.text(); // return pesan error 
+          }
+      })
+      .then(data => {
+          // alert error jika ada data invalid
+          if (data) {
+              form.reset(); // reset form
+              alert(data);
+          }
+      })
+      return false;
+  }
+  // Event listener untuk submit form
+  document.getElementById("productForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    addProduct();
+  });
+```
+fungsi ini akan menambahkan product ketika berhasil, dan memunculkan pesan error jika terdapat invalid input pada field.
+
+
+
+
+
+<hr>
+
 # TUGAS 5
 
 ##  Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
