@@ -116,7 +116,6 @@
             const description = DOMPurify.sanitize(item.fields.description);
             const rating = item.fields.rating || 0;
             const starPercentage = (rating / 5) * 100;
-            // const rating = item.fields.rating || 0;
             htmlString += `
               <div class="relative break-inside-avoid transform duration-300 ease-in-out hover:-translate-y-1 hover:scale-100 text-white">
                 <div class="relative top-5 card shadow-md rounded-lg mb-6 break-inside-avoid flex flex-col border-50 max-w-md" style="border-radius: 1rem;">
