@@ -110,6 +110,7 @@
         // Jika produk tersedia, buat layout grid
         classNameString = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full m-10";
 
+
         // Loop melalui setiap produk
         products.forEach((item) => {
             const product_name = DOMPurify.sanitize(item.fields.product_name);
