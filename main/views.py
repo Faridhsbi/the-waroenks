@@ -38,30 +38,6 @@ def create_product(request):
     context = {'form': form}
     return render(request, "create_product.html", context)
 
-# @csrf_exempt
-# @require_POST
-# def add_product_by_ajax(request):
-#     product_name = strip_tags(request.POST.get("product_name"))
-#     description = strip_tags(request.POST.get("description"))
-#     price = request.POST.get("price")
-#     stock = request.POST.get("stock")
-#     rating = request.POST.get("rating")
-#     user = request.user
-
-#     if(len(product_name.strip()) != 0 & len(description.strip()) != 0 & product_name != request.POST.get("product_name")):
-#         new_product = Product(
-#             product_name=product_name, 
-#             description=description,
-#             price=price,
-#             stock=stock,
-#             rating=rating,
-#             user=user
-#         )
-#         new_product.save()
-#         return HttpResponse(b"CREATED", status=201)
-    
-#     return HttpResponse({"error": "Invalid text input"}, status=400)
-
 @csrf_exempt
 @require_POST
 def add_product_by_ajax(request):
@@ -94,7 +70,7 @@ def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.get_user()
+            user = form.save()
             login(request, user)
             response = HttpResponseRedirect(reverse("main:show_main"))
             response.set_cookie('last_login', str(datetime.datetime.now()))
