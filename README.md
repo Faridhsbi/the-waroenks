@@ -19,7 +19,7 @@ Link PWS : [The Waroenks](http://muhammad-farid31-thewaroenks.pbp.cs.ui.ac.id/)
     Dapat digunakan untuk pengembangan front-end maupun back-end. Tersedia banyak library seperti React, Angular, Vue.js untuk front-end, serta Node.js untuk back-end
 
 ## Fungsi dari penggunaan await ketika kita menggunakan fetch()
-await adalah sebuah keyword dalam JavaScript yang digunakan untuk menghentikan eksekusi fungsi async sampai sebuah promise diselesaikan. await digunakan bersama dengan fetch() untuk menunggu respon dari server sebelum melanjutkan eksekusi kode selanjutnya.
+`await` adalah sebuah keyword dalam JavaScript yang digunakan untuk menghentikan eksekusi fungsi async sampai sebuah promise diselesaikan. await digunakan bersama dengan `fetch()` untuk menunggu respon dari server sebelum melanjutkan eksekusi kode selanjutnya.
 
 ### Yang terjadi ketika tidak menggunakan await
 Jika kita tidak menggunakan await, kode akan langsung melanjutkan eksekusi tanpa menunggu respon dari server. Dapat menyebabkan data yang tidak tersedia dan kesalahan yang tidak bisa ditangani saat setelah proses eksekusi 
@@ -38,7 +38,7 @@ Decorator csrf_exempt dalam Django digunakan untuk menonaktifkan pemeriksaan Cro
   Frontend memberikan umpan balik cepat kepada pengguna, sementara backend bertanggung jawab untuk menjaga integritas data. Karena backend memiliki akses ke seluruh logika aplikasi, ia dapat melakukan validasi yang lebih mendalam dan kompleks untuk mencegah serangan keamanan.
 
 ## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
-### 1. Ubahlah kode cards data mood agar dapat mendukung AJAX GET.
+### Ubahlah kode cards data mood agar dapat mendukung AJAX GET.
   Untuk mengubah kode cards menjadi AJAX, saya membuat sebuah fungsi baru pada `views.py`
   ```python
 @csrf_exempt
@@ -170,7 +170,7 @@ def add_product_by_ajax(request):
   }
   refreshProducts();
   ```
-  ### 2. Lakukan pengambilan data product menggunakan AJAX GET. Pastikan bahwa data yang diambil hanyalah data milik pengguna yang logged-in.
+  ### Lakukan pengambilan data product menggunakan AJAX GET. Pastikan bahwa data yang diambil hanyalah data milik pengguna yang logged-in.
   Untuk mengambil data product yang sesuai dengan data miliki user, saya menambahkan `user=user` pada add_product_by_ajax :
   ```python
   ...
@@ -186,7 +186,7 @@ def add_product_by_ajax(request):
   ...
   ```
 
-  ### 3. Buatlah sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan product.
+  ### Buatlah sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan product.
   Pada `main.html`, didalam div dengan `id="product_card"` yang telah kita buat tadi,  
   ```html
     ...
@@ -252,7 +252,7 @@ Untuk validasi input data, saya menambahkan baris validasi pada fungsi add_produ
     ...
 ```
 Validasi akan mereturn respon dengan `status = 400` dan pesan "Invalid Input".
-Kemudian saya juga membuat fungsi baru pada script yaitu add_product agar kita bisa menambahkan data product kita melalui button AJAX terbaru,
+Kemudian saya juga membuat fungsi baru pada script yaitu `())` agar kita bisa menambahkan data product kita melalui button AJAX terbaru,
 ```js
  // JavaScript (client-side)
   function addProduct() {
@@ -294,9 +294,14 @@ Kemudian saya juga membuat fungsi baru pada script yaitu add_product agar kita b
 ```
 fungsi ini akan menambahkan product ketika berhasil, dan memunculkan pesan error jika terdapat invalid input pada field.
 
+### Buatlah path /create-ajax/ yang mengarah ke fungsi view yang baru kamu buat.
+Untuk dapat mengimplementasikan path `/create-ajax/`, saya membuat path baru didalam `urls.py` sama seperti yang sudah dijelaskan pada check-list sebelumnya 
 
+### Hubungkan form yang telah kamu buat di dalam modal kamu ke path /create-ajax/.
+Kemudian, Form pada modal yang telah dibuat dapat dihubungkan melalui `fetch()` yang terdapat di fungsi `add_product()`
 
-
+### Lakukan refresh pada halaman utama secara asinkronus untuk menampilkan daftar mood terbaru tanpa reload halaman utama secara keseluruhan.
+Agar kita bisa melakukan refresh pada main page secara asinkronus, kita tinggal menambahkan `async` pada fungsi `refreshProducts()` sebagaimana yang telah dibuat sebelumnya. Jadi kita sudah tidak perlu lagi melakukan refresh secara manual karena setelah kita menambahkan produk, web akan melakukan refresh secara automatis. 
 
 <hr>
 
