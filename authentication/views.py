@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 import json
 from django.http import JsonResponse
+from main.models import *
 
 @csrf_exempt
 def login(request):
@@ -76,7 +77,7 @@ def create_product_flutter(request):
     if request.method == 'POST':
 
         data = json.loads(request.body)
-        new_product = Productbjects.create(
+        new_product = Product.objects.create(
             user=request.user,
             mood=data["mood"],
             mood_intensity=int(data["mood_intensity"]),
